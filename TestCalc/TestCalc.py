@@ -80,12 +80,32 @@ class TestOnlineSchool(unittest.TestCase):
         time.sleep(1)
         element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="___gcse_1"]/div/div/div/div[5]/div[2]/div/div/div[1]/div[1]/div/div[1]/div/a/b')))
         value=element.text
-        print(value)
         if value =="Минор и алгебраическое дополнение матрицы":
             self.to_file("Test 4 passed")
         else:
             self.to_file("Test 4 failed")
-            
+#Column division      
+    def test5(self):
+        self.to_file("Test 5 start")
+        self.driver.get(self.sitetest) 
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_body1"]/header/nav/div[2]/div[3]/a/div/div[2]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[3]/div[2]/img'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[4]/a[5]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_c1"]'))).send_keys("6")
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_c2"]'))).send_keys("2")
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_nabor"]'))).click()
+        element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="res_main_t"]/center/p[1]')))
+        result_text = element.text
+        last_digit = result_text[-1]
+        if last_digit == "3":
+            self.to_file("Test 5 passed")
+        else:
+            self.to_file("Test 5 failed")
+        
+        
+
+
+        
         
 
         
@@ -102,5 +122,6 @@ if __name__ == "__main__":
     suite.addTest(TestOnlineSchool('test2'))
     suite.addTest(TestOnlineSchool('test3'))
     suite.addTest(TestOnlineSchool('test4'))
+    suite.addTest(TestOnlineSchool('test5'))
 
     unittest.TextTestRunner().run(suite)
