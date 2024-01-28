@@ -1,4 +1,5 @@
 import unittest
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -23,7 +24,7 @@ class TestOnlineSchool(unittest.TestCase):
             with open(self.file_path, 'w') as file:
                 file.write(text + '\n')
             print(f"File {self.file_path} created, and text appended")
-            #
+
     def test_test1(self):
         self.to_file("Test 1 start")
         self.driver.get(self.sitetest)
@@ -32,12 +33,39 @@ class TestOnlineSchool(unittest.TestCase):
         self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[4]/a[2]'))).click()
         self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_kilotonne"]'))).send_keys(1)
         element = self.wait.until(EC.visibility_of_element_located((By.ID, 'oms_tonne')))
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[4]/a[2]'))).click()
         value = int(element.get_attribute('value'))
-        print(value)
         if value == 1000:
             self.to_file("Test 1 passed")
         else:
             self.to_file("Test 1 failed")
+#Find X percentage of number Y.
+    def test_test2(self):
+        self.to_file("Test 2 start")
+        self.driver.get(self.sitetest)
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_body1"]/header/nav/div[2]/div[3]/a/div/div[2]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[3]/div[4]/img'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[3]/a[2]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_c1"]'))).send_keys(10)
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_c2"]'))).send_keys(10)
+        time.sleep(3)
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//input[@onclick="percent1(\'oms_c\')"]'))).click()
+        result_element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="res_main_t"]/center/div')))
+        result_text = result_element.text
+        last_digit = result_text[-1]
+
+        if last_digit == 1000:
+            self.to_file("Test 2 passed")
+        else:
+            self.to_file("Test 2 failed")
+        
+        
 
 if __name__ == "__main__":
-    unittest.main()
+    suite = unittest.TestSuite()
+
+   
+    suite.addTest(TestOnlineSchool('test_test1'))
+    suite.addTest(TestOnlineSchool('test_test2'))
+
+    unittest.TextTestRunner().run(suite)
