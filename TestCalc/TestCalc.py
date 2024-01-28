@@ -141,6 +141,23 @@ class TestOnlineSchool(unittest.TestCase):
         else:
          self.to_file("Test 7 failed")
 
+#Downloading a file
+    def test8(self):
+        self.to_file("Test 8 start")
+        self.driver.get(self.sitetest) 
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_body1"]/header/nav/div[2]/div[5]/a/div/div[2]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[4]/a[2]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//a[contains(text(), "Скачать таблицу умножения")]'))).click()
+        time.sleep(5)
+        
+        try:
+           content_after_download = self.driver.page_source
+           self.assertTrue(content_after_download)
+           self.to_file("Test 8 passed")
+        except:
+           self.to_file("Test 8 failed")
+            
+
 
 
         
@@ -163,5 +180,6 @@ if __name__ == "__main__":
     suite.addTest(TestOnlineSchool('test5'))
     suite.addTest(TestOnlineSchool('test6'))
     suite.addTest(TestOnlineSchool('test7'))
+    suite.addTest(TestOnlineSchool('test8'))
 
     unittest.TextTestRunner().run(suite)
