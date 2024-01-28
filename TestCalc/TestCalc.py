@@ -38,6 +38,7 @@ class TestOnlineSchool(unittest.TestCase):
             self.to_file("Test 1 passed")
         else:
             self.to_file("Test 1 failed")
+            
 #Find X percentage of number Y.
     def test2(self):
         self.to_file("Test 2 start")
@@ -56,6 +57,7 @@ class TestOnlineSchool(unittest.TestCase):
             self.to_file("Test 2 passed")
         else:
             self.to_file("Test 2 failed")
+            
  #standart calc           
     def test3(self):
         self.to_file("Test 3 start")
@@ -70,6 +72,7 @@ class TestOnlineSchool(unittest.TestCase):
             self.to_file("Test 3 passed")
         else:
             self.to_file("Test 3 failed")
+            
 #search test
     def test4(self):
         self.to_file("Test 4 start")
@@ -84,6 +87,7 @@ class TestOnlineSchool(unittest.TestCase):
             self.to_file("Test 4 passed")
         else:
             self.to_file("Test 4 failed")
+            
 #Column division      
     def test5(self):
         self.to_file("Test 5 start")
@@ -101,6 +105,23 @@ class TestOnlineSchool(unittest.TestCase):
             self.to_file("Test 5 passed")
         else:
             self.to_file("Test 5 failed")
+            
+#Unit converter. Degree Celsius
+    def test6(self):
+        self.to_file("Test 6 start")
+        self.driver.get(self.sitetest) 
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_body1"]/header/nav/div[2]/div[3]/a/div/div[2]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[3]/div[1]/img'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[4]/a[8]'))).click()
+        
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_close_1"]/table/tbody/tr[1]/td[1]/a'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_this_temp"]'))).send_keys("10")
+        element = self.wait.until(EC.visibility_of_element_located((By.ID, 'oms_farengeyt')))
+        value = element.text
+        if value == "50":
+            self.to_file("Test 6 passed")
+        else:
+            self.to_file("Test 6 failed")
         
         
 
@@ -123,5 +144,6 @@ if __name__ == "__main__":
     suite.addTest(TestOnlineSchool('test3'))
     suite.addTest(TestOnlineSchool('test4'))
     suite.addTest(TestOnlineSchool('test5'))
+    suite.addTest(TestOnlineSchool('test6'))
 
     unittest.TextTestRunner().run(suite)
