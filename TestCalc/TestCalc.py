@@ -124,6 +124,23 @@ class TestOnlineSchool(unittest.TestCase):
             self.to_file("Test 6 failed")
         
         
+#Cube area
+    def test7(self):
+        self.to_file("Test 7 start")
+        self.driver.get(self.sitetest) 
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_body1"]/header/nav/div[2]/div[3]/a/div/div[2]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[3]/div[18]/img'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[4]/a[2]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_c1"]'))).send_keys("1.4")
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="frtabl"]/p/input'))).click()
+        element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="res"]/div[2]')))
+        text = element.text
+        last_digit = text[-5:]
+        if last_digit == "11.76":
+         self.to_file("Test 7 passed")
+        else:
+         self.to_file("Test 7 failed")
+
 
 
         
@@ -145,5 +162,6 @@ if __name__ == "__main__":
     suite.addTest(TestOnlineSchool('test4'))
     suite.addTest(TestOnlineSchool('test5'))
     suite.addTest(TestOnlineSchool('test6'))
+    suite.addTest(TestOnlineSchool('test7'))
 
     unittest.TextTestRunner().run(suite)
