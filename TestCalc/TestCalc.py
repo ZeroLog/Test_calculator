@@ -156,6 +156,24 @@ class TestOnlineSchool(unittest.TestCase):
            self.to_file("Test 8 passed")
         except:
            self.to_file("Test 8 failed")
+#Graph of a function, download pictures           
+    def test9(self):
+        self.to_file("Test 9 start")
+        self.driver.get(self.sitetest) 
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_body1"]/header/nav/div[2]/div[3]/a/div/div[2]'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[3]/div[6]/img'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="frtabl"]/div/p[2]/input'))).click()
+        element = self.driver.find_element(By.XPATH, '//span[@class="icon-oms-save"]')
+        self.driver.execute_script("arguments[0].click();", element)
+
+        time.sleep(5)
+        
+        try:
+           content_after_download = self.driver.page_source
+           self.assertTrue(content_after_download)
+           self.to_file("Test 9 passed")
+        except:
+           self.to_file("Test 9 failed")
             
 
 
@@ -181,5 +199,6 @@ if __name__ == "__main__":
     suite.addTest(TestOnlineSchool('test6'))
     suite.addTest(TestOnlineSchool('test7'))
     suite.addTest(TestOnlineSchool('test8'))
+    suite.addTest(TestOnlineSchool('test9'))
 
     unittest.TextTestRunner().run(suite)
