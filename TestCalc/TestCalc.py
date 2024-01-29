@@ -1,4 +1,5 @@
-﻿import unittest
+﻿from multiprocessing import Value
+import unittest
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -8,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class TestOnlineSchool(unittest.TestCase):
     def setUp(self):
         self.sitetest = "https://ru.onlinemschool.com/"
+        self.sitetest2 = "https://onlinemschool.com/"
         self.file_path = r"C:\Users\ZeroLog\Documents\testlog\test.log"
         self.driver = webdriver.Chrome()
         self.wait = WebDriverWait(self.driver, 15)
@@ -156,7 +158,7 @@ class TestOnlineSchool(unittest.TestCase):
            self.to_file("Test 8 passed")
         except:
            self.to_file("Test 8 failed")
-#Graph of a function, download pictures           
+#Graph of a function, download pictures 
     def test9(self):
         self.to_file("Test 9 start")
         self.driver.get(self.sitetest) 
@@ -174,6 +176,23 @@ class TestOnlineSchool(unittest.TestCase):
            self.to_file("Test 9 passed")
         except:
            self.to_file("Test 9 failed")
+           
+#change launge
+    def test10(self):
+        self.to_file("Test 10 start")
+        self.driver.get(self.sitetest) 
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_body1"]/header/nav/div[1]/div/div[2]/div'))).click()
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_body1"]/header/nav/div[1]/div/div[2]/ul/li[2]/a'))).click()
+        self.wait.until(EC.url_to_be(self.sitetest2))
+        self.driver.get(self.sitetest2)
+        element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/h1')))
+        value = element.text
+        print(value)
+        if value == "Studying of mathematics onliney":
+           self.to_file("Test 10 passed")
+        else:
+            self.to_file("Test 10 failed")
+        
             
 
 
@@ -200,5 +219,6 @@ if __name__ == "__main__":
     suite.addTest(TestOnlineSchool('test7'))
     suite.addTest(TestOnlineSchool('test8'))
     suite.addTest(TestOnlineSchool('test9'))
+    suite.addTest(TestOnlineSchool('test10'))
 
     unittest.TextTestRunner().run(suite)
