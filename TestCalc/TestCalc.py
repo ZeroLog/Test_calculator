@@ -1,4 +1,4 @@
-﻿from multiprocessing import Value
+﻿
 import unittest
 import time
 from selenium import webdriver
@@ -36,10 +36,8 @@ class TestOnlineSchool(unittest.TestCase):
         self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_kilotonne"]'))).send_keys(1)
         element = self.wait.until(EC.visibility_of_element_located((By.ID, 'oms_tonne')))
         value = int(element.get_attribute('value'))
-        if value == 1000:
-            self.to_file("Test 1 passed")
-        else:
-            self.to_file("Test 1 failed")
+        self.assertEqual(value,1000)
+        self.to_file("Test 1 passed")
             
 #Find X percentage of number Y.
     def test2(self):
@@ -55,10 +53,8 @@ class TestOnlineSchool(unittest.TestCase):
         result_element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="res_main_t"]/center/div')))
         result_text = result_element.text
         last_digit = result_text[-1]
-        if last_digit == "1":
-            self.to_file("Test 2 passed")
-        else:
-            self.to_file("Test 2 failed")
+        self.assertEqual(last_digit,"1")
+        self.to_file("Test 2 passed")
             
  #standart calc           
     def test3(self):
@@ -70,10 +66,8 @@ class TestOnlineSchool(unittest.TestCase):
         self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_rgh1t"]/div[1]/table/tbody/tr[6]/td[4]/input'))).click()
         element=self.wait.until(EC.visibility_of_element_located((By.ID, 'oms_calc_res')))
         value = element.text
-        if value =="16":
-            self.to_file("Test 3 passed")
-        else:
-            self.to_file("Test 3 failed")
+        self.assertEqual(value,"16")
+        self.to_file("Test 3 passed")
             
 #search test
     def test4(self):
@@ -85,10 +79,9 @@ class TestOnlineSchool(unittest.TestCase):
         time.sleep(1)
         element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="___gcse_1"]/div/div/div/div[5]/div[2]/div/div/div[1]/div[1]/div/div[1]/div/a/b')))
         value=element.text
-        if value =="Минор и алгебраическое дополнение матрицы":
-            self.to_file("Test 4 passed")
-        else:
-            self.to_file("Test 4 failed")
+        self.assertEqual(value,"Минор и алгебраическое дополнение матрицы")
+        self.to_file("Test 4 passed")
+            
             
 #Column division      
     def test5(self):
@@ -103,10 +96,8 @@ class TestOnlineSchool(unittest.TestCase):
         element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="res_main_t"]/center/p[1]')))
         result_text = element.text
         last_digit = result_text[-1]
-        if last_digit == "3":
-            self.to_file("Test 5 passed")
-        else:
-            self.to_file("Test 5 failed")
+        self.assertEqual(last_digit,"3")
+        self.to_file("Test 5 passed")
             
 #Unit converter. Degree Celsius
     def test6(self):
@@ -120,10 +111,8 @@ class TestOnlineSchool(unittest.TestCase):
         self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_this_temp"]'))).send_keys("10")
         element = self.wait.until(EC.visibility_of_element_located((By.ID, 'oms_farengeyt')))
         value = element.text
-        if value == "50":
-            self.to_file("Test 6 passed")
-        else:
-            self.to_file("Test 6 failed")
+        self.assertEqual(value,"50")
+        self.to_file("Test 6 passed")
         
         
 #Cube area
@@ -138,10 +127,8 @@ class TestOnlineSchool(unittest.TestCase):
         element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="res"]/div[2]')))
         text = element.text
         last_digit = text[-5:]
-        if last_digit == "11.76":
-         self.to_file("Test 7 passed")
-        else:
-         self.to_file("Test 7 failed")
+        self.assertEqual(last_digit,"11.76")
+        self.to_file("Test 7 passed")
 
 #Downloading a file
     def test8(self):
@@ -151,7 +138,6 @@ class TestOnlineSchool(unittest.TestCase):
         self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/div[4]/a[2]'))).click()
         self.wait.until(EC.visibility_of_element_located((By.XPATH, '//a[contains(text(), "Скачать таблицу умножения")]'))).click()
         time.sleep(5)
-        
         try:
            content_after_download = self.driver.page_source
            self.assertTrue(content_after_download)
@@ -169,7 +155,6 @@ class TestOnlineSchool(unittest.TestCase):
         self.driver.execute_script("arguments[0].click();", element)
 
         time.sleep(5)
-        
         try:
            content_after_download = self.driver.page_source
            self.assertTrue(content_after_download)
@@ -188,11 +173,9 @@ class TestOnlineSchool(unittest.TestCase):
         element = self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="oms_center_block"]/h1')))
         value = element.text
         print(value)
-        if value == "Studying of mathematics onliney":
-           self.to_file("Test 10 passed")
-        else:
-            self.to_file("Test 10 failed")
-        
+        self.assertEqual(value,"Studying of mathematics onliney")
+        self.to_file("Test 10 passed")
+
             
 
 
